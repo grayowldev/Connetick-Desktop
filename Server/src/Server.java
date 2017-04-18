@@ -19,7 +19,7 @@ public class Server extends Application {
 
         Scene scene = new Scene(borderPane, 500,650);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Connetic Seer");
+        primaryStage.setTitle("Connetick Seer");
         primaryStage.show();
         primaryStage.setIconified(true);
     }

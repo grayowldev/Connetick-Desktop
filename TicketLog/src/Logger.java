@@ -3,7 +3,12 @@
  */
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class Logger extends Application {
 
@@ -12,7 +17,12 @@ public class Logger extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
 
+        VBox vBox = FXMLLoader.load(getClass().getResource("UI.fxml"));
+        Scene scene = new Scene(vBox,500,600);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Support");
+        primaryStage.show();
     }
 }

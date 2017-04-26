@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane prefHeight="702.0" prefWidth="1400.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.3333129882812" minWidth="10.0" prefWidth="257.99998474121094" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="942.6666641235352" minWidth="10.0" prefWidth="363.33331298828125" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="779.6666870117188" minWidth="10.0" prefWidth="779.6666870117188" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TableView minHeight="-Infinity" prefHeight="337.0" prefWidth="1300.0" GridPane.columnSpan="3">
+               <columns>
+                  <TableColumn prefWidth="258.0" resizable="false">
+                     <graphic>
+                        <VBox prefHeight="200.0" prefWidth="100.0" />
+                     </graphic>
+                  </TableColumn>
+                  <TableColumn prefWidth="360.0">
+                     <graphic>
+                        <VBox prefHeight="200.0" prefWidth="100.0" />
+                     </graphic>
+                  </TableColumn>
+                  <TableColumn minWidth="0.0" prefWidth="784.6666564941406">
+                     <graphic>
+                        <VBox prefHeight="700.0" prefWidth="779.0">
+                           <children>
+                              <TextArea prefHeight="712.0" prefWidth="779.0" />
+                           </children>
+                        </VBox>
+                     </graphic>
+                  </TableColumn>
+               </columns>
+            </TableView>
+         </children>
+      </GridPane>
+   </children>
+</VBox>

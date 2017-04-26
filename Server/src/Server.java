@@ -1,53 +1,92 @@
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 import java.io.DataInputStream;
+import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Date;
 
 /**
- * Created by kwasi on 4/18/2017.
+ * Created by GrayOwl on 4/20/17.
  */
 public class Server extends Application {
-    public static void main(String[] args) {
-        launch(args);
-    }
+    // Text area for displaying contents
+    private TextArea ta = new TextArea();
+    private int port = 4000;
 
     private int clientNo = 0;
-
     @Override
     public void start(Stage primaryStage) throws Exception {
-        BorderPane borderPane = FXMLLoader.load(getClass().getResource("serverGUI.fxml"));
 
-        Scene scene = new Scene(borderPane, 500,650);
+        Scene scene = new Scene(new ScrollPane(ta), 450, 200);
+        primaryStage.setTitle("MultiThreadServer");
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Connetick Seer");
         primaryStage.show();
-        primaryStage.setIconified(true);
 
-        new Thread(() -> {
+        new Thread(() ->{
             try {
-                ServerSocket serverSocket = new ServerSocket(3000);
-                Platform.runLater(() ->{
+                ServerSocket serverSocket = new ServerSocket(port);
+                ta.appendText("MultiThreadServer started at " + new Date() + '\n');
+                ta.appendText("Server IP address is: " + InetAddress.getLocalHost() + '\n');
 
-                });
+                while (true){
+                    Socket socket = serverSocket.accept();
 
-                Socket socket = serverSocket.accept();
+                    clientNo++;
 
+                    Platform.runLater(() -> {
+                        ta.appendText("Started thread for client at " + new Date() + '\n' );
+
+                        InetAddress inetAddress = socket.getInetAddress();
+                        ta.appendText("Client " + clientNo + "'s host name is " + inetAddress.getHostName() + "\n");
+                        ta.appendText("Client " + clientNo + "'s IP address is " + inetAddress.getHostAddress() + "\n");
+
+                    });
+
+                    new Thread(new HandleAClient(socket)).start();
+                }
+            }
+            catch (IOException ex){
+                System.err.println(ex);
+            }
+        }).start();
+    }
+
+    class HandleAClient implements Runnable {
+        private Socket socket;
+
+        public HandleAClient(Socket socket){
+            this.socket = socket;
+        }
+
+        public void run(){
+            try {
                 DataInputStream clientInput = new DataInputStream(socket.getInputStream());
-                DataOutputStream clientOutput = new DataOutputStream(socket.getOutputStream());
+                DataOutput clientOutput = new DataOutputStream(socket.getOutputStream());
 
+                while (true){
+                    double radius = clientInput.readDouble();
+                    double area = radius * radius * Math.PI;
+
+                    clientOutput.writeDouble(area);
+
+                    Platform.runLater(() -> {
+                        ta.appendText("radius receive from client: " + radius + '\n');
+                        ta.appendText("Area found: " + area  + '\n');
+                    });
+                }
             }
             catch (IOException ex){
                 ex.printStackTrace();
             }
-        }).start();
+        }
     }
 }
